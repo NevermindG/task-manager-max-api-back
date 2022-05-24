@@ -11,9 +11,11 @@ import com.max.taskmanagermax_api.service.CommentService;
 
 
 import javax.validation.Valid;
+import static com.max.taskmanagermax_api.utility.CrossOrigin.URL_CROSS_ORIGIN;
 
 @RestController
 @RequestMapping ("/api/")
+@CrossOrigin(origins = URL_CROSS_ORIGIN)
 public class CommentController {
     private final CommentService commentService;
     

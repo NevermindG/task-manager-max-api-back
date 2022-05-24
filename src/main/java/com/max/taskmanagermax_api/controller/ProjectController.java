@@ -12,10 +12,12 @@ import com.max.taskmanagermax_api.service.ProjectService;
 
 
 import javax.validation.Valid;
+import static com.max.taskmanagermax_api.utility.CrossOrigin.URL_CROSS_ORIGIN;
 import static com.max.taskmanagermax_api.utility.PaginationConstants.*;
 
 @RestController
 @RequestMapping ("/api/projects")
+@CrossOrigin(origins = URL_CROSS_ORIGIN)
 @SuppressWarnings ({"all"})
 public class ProjectController {
     private final ProjectService projectService;

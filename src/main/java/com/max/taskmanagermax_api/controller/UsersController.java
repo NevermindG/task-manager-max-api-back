@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.List;
+import static com.max.taskmanagermax_api.utility.CrossOrigin.URL_CROSS_ORIGIN;
 
 @RestController
 @RequestMapping ("/api/")
-@CrossOrigin
+@CrossOrigin(origins = URL_CROSS_ORIGIN)
 public class UsersController {
     
     private final UserService userService;
