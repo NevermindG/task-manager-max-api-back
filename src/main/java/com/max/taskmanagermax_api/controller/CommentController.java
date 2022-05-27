@@ -24,7 +24,7 @@ public class CommentController {
     }
     
     
-    @GetMapping("/tasks/{taskId}/comments/")
+    @GetMapping("/tasks/{taskId}/comments")
     public List<CommentDTO> listCommentsByTaskId(@PathVariable (value = "taskId") long taskId) {
         return commentService.findCommentsByTaskId(taskId);
     }
