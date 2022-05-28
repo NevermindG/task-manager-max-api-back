@@ -54,10 +54,13 @@ public class CommentController {
     }
     
     @DeleteMapping("/tasks/{taskId}/comments/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable (name = "taskId") long taskId,
+    public ResponseEntity<HashMap<String, Object>> deleteComment(@PathVariable (name = "taskId") long taskId,
                                                 @PathVariable (name = "commentId") long commentId) {
         commentService.deleteComment(taskId, commentId);
-        return new ResponseEntity<>("Comentario eliminado con éxito", HttpStatus.OK);
+        HashMap<String, Object> salida = new HashMap<String, Object>();
+        salida.put("message", "Comentario eliminado con éxito");
+        salida.put("status", HttpStatus.OK);
+        return new ResponseEntity<>(salida, HttpStatus.OK);
     }
     
 }
