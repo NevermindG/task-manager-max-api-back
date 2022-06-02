@@ -1,5 +1,6 @@
 package com.max.taskmanagermax_api.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -53,9 +54,12 @@ public class TaskController {
     }
     
     @DeleteMapping ("projects/{projectId}/tasks/{taskId}")
-    public ResponseEntity<String> deleteTask(@PathVariable (value = "projectId") long projectId,
+    public ResponseEntity<HashMap<String, Object>> deleteTask(@PathVariable (value = "projectId") long projectId,
                                                 @PathVariable (value = "taskId") long taskId) {
         taskService.deleteTask(projectId, taskId);
-        return new ResponseEntity<>("Tarea eliminada con éxito", HttpStatus.OK);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("message", "Tarea eliminada con éxito");
+        response.put("status", HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import static com.max.taskmanagermax_api.utility.CrossOrigin.URL_CROSS_ORIGIN;
 import static com.max.taskmanagermax_api.utility.PaginationConstants.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping ("/api/projects")
 @CrossOrigin(origins = URL_CROSS_ORIGIN)
@@ -59,8 +61,11 @@ public class ProjectController {
     
     @PreAuthorize ("hasRole('ADMIN')")
     @DeleteMapping ("/{id}")
-    public ResponseEntity<String> deleteProject(@PathVariable (name = "id") long id) {
+    public ResponseEntity<HashMap<String, Object>> deleteProject(@PathVariable (name = "id") long id) {
         projectService.deleteProject(id);
-        return new ResponseEntity<>("Proyecto eliminado con éxito", HttpStatus.OK);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("message", "Proyecto eliminado con éxito");
+        response.put("status", HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
