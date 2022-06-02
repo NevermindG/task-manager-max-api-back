@@ -94,7 +94,10 @@ public class AuthController {
             role.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
         user.setRoles(role);
         userService.save(user);
-        return new ResponseEntity<>("Usuario registrado existosamente", HttpStatus.CREATED);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("message", "Usuario creado con éxito");
+        response.put("status", HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
 }
