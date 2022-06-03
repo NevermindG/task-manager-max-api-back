@@ -1,6 +1,5 @@
 package com.max.taskmanagermax_api.service;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,8 +10,6 @@ import com.max.taskmanagermax_api.entity.User;
 import com.max.taskmanagermax_api.exceptions.MaxAppException;
 import com.max.taskmanagermax_api.exceptions.ResourceNotFoundException;
 import com.max.taskmanagermax_api.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +22,6 @@ import org.modelmapper.ModelMapper;
 import com.max.taskmanagermax_api.entity.Project;
 import com.max.taskmanagermax_api.repository.ProjectRepository;
 
-@Slf4j
 @Service
 public class ProjectServiceImpl implements ProjectService {
     
