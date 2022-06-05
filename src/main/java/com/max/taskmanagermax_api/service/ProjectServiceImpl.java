@@ -71,7 +71,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectDTO updateProject(ProjectDTO projectDTO, long id) {
         
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Publication", "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Proyecto", "id", id));
         
         project.setEstado(projectDTO.getEstado());
         project.setFechaRegistro(new Date());
