@@ -16,6 +16,7 @@ import static com.max.taskmanagermax_api.utility.CrossOrigin.URL_CROSS_ORIGIN;
 import static com.max.taskmanagermax_api.utility.PaginationConstants.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping ("/api/projects")
@@ -29,6 +30,11 @@ public class ProjectController {
     public ProjectController(ProjectService projectService, UserRepository userRepository) {
         this.projectService = projectService;
         this.userRepository = userRepository;
+    }
+
+    @GetMapping("/listAll")
+    public List<ProjectDTO> findAllUnpaginableProjects() {
+        return projectService.findAllUnpaginableProjects();
     }
     
     @GetMapping

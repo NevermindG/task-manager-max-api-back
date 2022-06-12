@@ -1,6 +1,8 @@
 package com.max.taskmanagermax_api.service;
 
 
+import java.util.List;
+
 import com.max.taskmanagermax_api.DTO.ProjectDTO;
 import com.max.taskmanagermax_api.DTO.ProjectResponseDTO;
 
@@ -16,4 +18,5 @@ public interface ProjectService {
     
     void deleteProject(long id);
     
+    List<ProjectDTO> findAllUnpaginableProjects();
 }
