@@ -35,6 +35,16 @@ public class ProjectServiceImpl implements ProjectService {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
     }
+
+    
+
+    @Override
+    public List<ProjectDTO> findAllUnpaginableProjects() {
+        List<Project> projects = projectRepository.findAll();
+        return projects.stream()
+                .map(this::mappingDTO)
+                .collect(Collectors.toList());
+    }
     
     @Override
     public ProjectDTO saveProject(ProjectDTO projectDTO) {
