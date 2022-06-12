@@ -1,16 +1,25 @@
 package com.max.taskmanagermax_api.controller;
 
+import com.max.taskmanagermax_api.DTO.SignUpDTO;
 import com.max.taskmanagermax_api.entity.User;
 import com.max.taskmanagermax_api.service.UserService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import static com.max.taskmanagermax_api.utility.CrossOrigin.URL_CROSS_ORIGIN;
 
 @RestController
@@ -29,4 +38,11 @@ public class UsersController {
         List<User> users = userService.findUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+
+//    @PutMapping("aaaaaaa/{id}")
+//    public ResponseEntity<SignUpDTO> updateUserRole(@Valid @RequestBody SignUpDTO userDTO,
+//                                                    @PathVariable (name = "id") long id) {
+//        SignUpDTO userResponse = userService.updateUserRole(userDTO, id);
+//        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+//    }
 }
