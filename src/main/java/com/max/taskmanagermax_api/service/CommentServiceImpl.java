@@ -25,7 +25,7 @@ public class CommentServiceImpl implements CommentService {
 
     private final TaskRepository taskRepository;
 
-    public CommentServiceImpl(CommentRepository commentRepository, ModelMapper modelMapper, TaskRepository taskRepository /*UserRepository userRepository*/) {
+    public CommentServiceImpl(CommentRepository commentRepository, ModelMapper modelMapper, TaskRepository taskRepository) {
         this.commentRepository = commentRepository;
         this.modelMapper = modelMapper;
         this.taskRepository = taskRepository;
@@ -54,8 +54,15 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO updateComment(long taskId, long commentId, CommentDTO commentRequest) {
+    
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, 0);
+        date = cal.getTime();
+        
         TaskCommentUser(taskId, commentId).setContenidoComentario(commentRequest.getContenido());
-        TaskCommentUser(taskId, commentId).setFechaRegistro(new Date());
+        TaskCommentUser(taskId, commentId).setFechaRegistro(date);
 
         Comment updatedComment = commentRepository.save(TaskCommentUser(taskId, commentId));
         return mappingDTO(updatedComment);
