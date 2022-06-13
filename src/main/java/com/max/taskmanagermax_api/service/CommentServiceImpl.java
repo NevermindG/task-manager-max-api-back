@@ -1,5 +1,6 @@
 package com.max.taskmanagermax_api.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO saveComment(long taskId, CommentDTO commentDTO) {
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, 0);
+        date = cal.getTime();
         
         Comment comment = mappingEntity(commentDTO);
         Task task = taskRepository
@@ -40,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Task", "id", taskId));
         comment.setTarea(task);
         comment.setContenidoComentario(commentDTO.getContenido());
-        comment.setFechaRegistro(new Date());
+        comment.setFechaRegistro(date);
         Comment newComment = commentRepository.save(comment);
         return mappingDTO(newComment);
     }

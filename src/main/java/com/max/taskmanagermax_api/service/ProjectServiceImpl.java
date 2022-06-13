@@ -1,5 +1,6 @@
 package com.max.taskmanagermax_api.service;
 
+import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,9 +50,14 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDTO saveProject(ProjectDTO projectDTO) {
         
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, 0);
+        date = cal.getTime();
         
         Project project = mappingEntity(projectDTO);
-        project.setFechaRegistro(new Date());
+        project.setFechaRegistro(date);
         project.setEstado(1);
         Set<User> user = new HashSet<>();
         
@@ -64,11 +70,13 @@ public class ProjectServiceImpl implements ProjectService {
         
         if (projectRepository.existsByNombreProyecto(project.getNombreProyecto())) {
             throw new MaxAppException(HttpStatus.BAD_REQUEST, "El nombre ya existe");
-        } else if (project.getFechaFinaliza().before(new Date())) {
+        } else if (project.getFechaFinaliza().before(date)) {
             throw new MaxAppException(HttpStatus.BAD_REQUEST, "El proyecto tiene que programarse un día después de la fecha esperada");
         } else {
             project.setNombreProyecto(project.getNombreProyecto());
-            project.setFechaFinaliza(project.getFechaFinaliza());
+            cal.setTime(project.getFechaFinaliza());
+            cal.add(Calendar.DATE, 1);
+            project.setFechaFinaliza(cal.getTime());
         }
         
         Project newProject = projectRepository.save(project);
@@ -79,12 +87,18 @@ public class ProjectServiceImpl implements ProjectService {
     
     @Override
     public ProjectDTO updateProject(ProjectDTO projectDTO, long id) {
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, 0);
+        date = cal.getTime();
         
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Proyecto", "id", id));
         
         project.setEstado(projectDTO.getEstado());
-        project.setFechaRegistro(new Date());
+        project.setFechaRegistro(date);
         project.setEstado(1);
         project.setNombreProyecto(projectDTO.getNombreProyecto());
         project.setFechaFinaliza(projectDTO.getFechaFinaliza());
@@ -95,10 +109,12 @@ public class ProjectServiceImpl implements ProjectService {
             user.add(userRepository.findByUsername((projectDTO.getNameUser().get(i))));
         }
         
-        if (project.getFechaFinaliza().before(new Date())) {
+        if (project.getFechaFinaliza().before(date)) {
             throw new MaxAppException(HttpStatus.BAD_REQUEST, "El proyecto tiene que programarse un día después de la fecha esperada");
         } else {
-            project.setFechaFinaliza(project.getFechaFinaliza());
+            cal.setTime(project.getFechaFinaliza());
+            cal.add(Calendar.DATE, 1);
+            project.setFechaFinaliza(cal.getTime());
         }
         
         project.setUsuarios(user);

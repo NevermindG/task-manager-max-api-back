@@ -1,5 +1,6 @@
 package com.max.taskmanagermax_api.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -40,12 +41,19 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO saveTask(long projectId, TaskDTO taskDTO) {
+        
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, 0);
+        date = cal.getTime();
+        
         Task task = mappingEntity(taskDTO);
         Project project = projectRepository
                 .findById(projectId)
                 .orElseThrow(() -> new ResourceNotFoundException("Project", "id", projectId));
         task.setProyecto(project);
-        task.setFechaRegistro(new Date());
+        task.setFechaRegistro(date);
         task.setEstado(1);
         
         Set<User> user = new HashSet<>();
@@ -56,10 +64,12 @@ public class TaskServiceImpl implements TaskService {
         
         task.setUsuarios(user);
         
-        if (task.getFechaFinaliza().before(new Date())) {
+        if (task.getFechaFinaliza().before(date)) {
             throw new MaxAppException(HttpStatus.BAD_REQUEST, "La tarea tiene que programarse un día después de la fecha esperada");
         } else {
-            task.setFechaFinaliza(project.getFechaFinaliza());
+            cal.setTime(task.getFechaFinaliza());
+            cal.add(Calendar.DATE, 1);
+            task.setFechaFinaliza(cal.getTime());
         }
         Task newTask = taskRepository.save(task);
         return mappingDTO(newTask);
@@ -67,12 +77,26 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO updateTask(long projectId, long taskId, TaskDTO taskRequest) {
+    
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, 0);
+        date = cal.getTime();
 
         ProjectTask(projectId, taskId).setNombreTarea(taskRequest.getNombreTarea());
         ProjectTask(projectId, taskId).setContenidoTarea(taskRequest.getContenidoTarea());
         ProjectTask(projectId, taskId).setFechaFinaliza(taskRequest.getFechaFinaliza());
         ProjectTask(projectId, taskId).setEstado(1);
-        ProjectTask(projectId, taskId).setFechaRegistro(new Date());
+        ProjectTask(projectId, taskId).setFechaRegistro(date);
+    
+        Set<User> user = new HashSet<>();
+    
+        for (int i = 0; i < taskRequest.getNameUser().size(); i++) {
+            user.add(userRepository.findByUsername((taskRequest.getNameUser().get(i))));
+        }
+    
+        ProjectTask(projectId, taskId).setUsuarios(user);
 
         Task updatedTask = taskRepository.save(ProjectTask(projectId, taskId));
         return mappingDTO(updatedTask);
