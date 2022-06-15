@@ -58,22 +58,7 @@ public class UserService {
     public List<User> findUsers() {
         return userRepository.findAll();
     }
-
     
-//    public SignUpDTO updateUserRole(SignUpDTO userDTO, long id) {
-//
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Usuario", "id", id));
-//
-//        //change the type enum role of the user
-//        Set<Role> roles = new HashSet<>();
-//        roles.stream().filter(x -> x.getRoleName().equals(RoleName.ROLE_USER)).close();//(RoleService.getByRoleName(RoleName.ROLE_USER).get());
-//        user.setRoles(roles);
-//
-//        User updateUser = userRepository.save(user);
-//        return mappingDTO(updateUser);
-//    }
-
     private SignUpDTO mappingDTO(User user) {
         return modelMapper.map(user, SignUpDTO.class);
     }

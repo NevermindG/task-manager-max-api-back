@@ -38,11 +38,5 @@ public class UsersController {
         List<User> users = userService.findUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
-//    @PutMapping("aaaaaaa/{id}")
-//    public ResponseEntity<SignUpDTO> updateUserRole(@Valid @RequestBody SignUpDTO userDTO,
-//                                                    @PathVariable (name = "id") long id) {
-//        SignUpDTO userResponse = userService.updateUserRole(userDTO, id);
-//        return new ResponseEntity<>(userResponse, HttpStatus.OK);
-//    }
+    
 }

@@ -2,6 +2,7 @@ package com.max.taskmanagermax_api.controller;
 
 import com.max.taskmanagermax_api.DTO.SignInDTO;
 import com.max.taskmanagermax_api.DTO.SignUpDTO;
+import com.max.taskmanagermax_api.DTO.UsersDTO;
 import com.max.taskmanagermax_api.entity.Role;
 import com.max.taskmanagermax_api.entity.User;
 import com.max.taskmanagermax_api.enums.RoleName;
@@ -99,5 +100,24 @@ public class AuthController {
         response.put("status", HttpStatus.CREATED);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
 
+    }
+    
+    @PutMapping ("/updateRoles")
+    public ResponseEntity<?> updateRoles(@Valid @RequestBody UsersDTO usersDTO) {
+        User user = userService.getByUserName(usersDTO.getUsername());
+        
+        Set<Role> role = new HashSet<>();
+        role.add(roleService.getByRoleName(RoleName.ROLE_USER).get());
+        if (usersDTO.getRoles().contains("ROLE_ADMIN"))
+            role.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
+        user.setRoles(role);
+        
+        userService.save(user);
+        
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("message", "Roles actualizados con éxito");
+        response.put("status", HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+        
     }
 }
