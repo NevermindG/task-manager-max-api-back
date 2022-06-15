@@ -1,5 +1,6 @@
 package com.max.taskmanagermax_api.repository;
 
+import com.max.taskmanagermax_api.DTO.SignUpDTO;
 import com.max.taskmanagermax_api.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
