@@ -175,23 +175,5 @@ public class TaskServiceImpl implements TaskService {
 
         return task;
     }
-    
-//    private void getCustomDate(TaskDTO taskDTO) {
-//
-//        Task task = mappingEntity(taskDTO);
-//
-//        var startDate = task.getFechaRegistro().getTime();
-//        var endDate = task.getFechaFinaliza().getTime();
-//        var difference = endDate - startDate;
-//        var days = Math.floor(difference / (1000 * 60 * 60 * 24));
-//
-//        if (difference > endDate) {
-//            task.setEstado(0);
-//        } if (days <= 2) {
-//            task.setEstado(2);
-//        }
-//
-//    }
-
 
 }
