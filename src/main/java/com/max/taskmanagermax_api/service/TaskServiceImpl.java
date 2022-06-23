@@ -55,6 +55,15 @@ public class TaskServiceImpl implements TaskService {
         task.setProyecto(project);
         task.setFechaRegistro(date);
         task.setEstado(1);
+    
+        var startDate = task.getFechaRegistro().getTime();
+        var endDate = task.getFechaFinaliza().getTime();
+        var difference = endDate - startDate;
+        var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        
+        if (days <= 2) {
+            task.setEstado(2);
+        }
         
         Set<User> user = new HashSet<>();
         
@@ -89,6 +98,15 @@ public class TaskServiceImpl implements TaskService {
         ProjectTask(projectId, taskId).setFechaFinaliza(taskRequest.getFechaFinaliza());
         ProjectTask(projectId, taskId).setEstado(1);
         ProjectTask(projectId, taskId).setFechaRegistro(date);
+    
+        var startDate = ProjectTask(projectId, taskId).getFechaRegistro().getTime();
+        var endDate = ProjectTask(projectId, taskId).getFechaFinaliza().getTime();
+        var difference = endDate - startDate;
+        var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    
+        if (days <= 2) {
+            ProjectTask(projectId, taskId).setEstado(2);
+        }
     
         Set<User> user = new HashSet<>();
     
@@ -157,6 +175,23 @@ public class TaskServiceImpl implements TaskService {
 
         return task;
     }
+    
+//    private void getCustomDate(TaskDTO taskDTO) {
+//
+//        Task task = mappingEntity(taskDTO);
+//
+//        var startDate = task.getFechaRegistro().getTime();
+//        var endDate = task.getFechaFinaliza().getTime();
+//        var difference = endDate - startDate;
+//        var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+//
+//        if (difference > endDate) {
+//            task.setEstado(0);
+//        } if (days <= 2) {
+//            task.setEstado(2);
+//        }
+//
+//    }
 
 
 }
