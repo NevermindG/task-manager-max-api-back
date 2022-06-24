@@ -98,7 +98,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .orElseThrow(() -> new ResourceNotFoundException("Proyecto", "id", id));
         
         project.setEstado(projectDTO.getEstado());
-        project.setFechaRegistro(date);
+        //project.setFechaRegistro(date);
         project.setEstado(1);
         project.setNombreProyecto(projectDTO.getNombreProyecto());
         project.setFechaFinaliza(projectDTO.getFechaFinaliza());

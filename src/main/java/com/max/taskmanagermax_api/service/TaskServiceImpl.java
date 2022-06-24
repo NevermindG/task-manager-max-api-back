@@ -97,7 +97,7 @@ public class TaskServiceImpl implements TaskService {
         ProjectTask(projectId, taskId).setContenidoTarea(taskRequest.getContenidoTarea());
         ProjectTask(projectId, taskId).setFechaFinaliza(taskRequest.getFechaFinaliza());
         ProjectTask(projectId, taskId).setEstado(1);
-        ProjectTask(projectId, taskId).setFechaRegistro(date);
+        //ProjectTask(projectId, taskId).setFechaRegistro(date);
     
         var startDate = ProjectTask(projectId, taskId).getFechaRegistro().getTime();
         var endDate = ProjectTask(projectId, taskId).getFechaFinaliza().getTime();
@@ -116,6 +116,14 @@ public class TaskServiceImpl implements TaskService {
     
         ProjectTask(projectId, taskId).setUsuarios(user);
 
+        if (ProjectTask(projectId, taskId).getFechaFinaliza().before(date)) {
+            throw new MaxAppException(HttpStatus.BAD_REQUEST, "La tarea tiene que programarse un día después de la fecha esperada");
+        } else {
+            cal.setTime(ProjectTask(projectId, taskId).getFechaFinaliza());
+            cal.add(Calendar.DATE, 1);
+            ProjectTask(projectId, taskId).setFechaFinaliza(cal.getTime());
+        }
+        
         Task updatedTask = taskRepository.save(ProjectTask(projectId, taskId));
         return mappingDTO(updatedTask);
     }
