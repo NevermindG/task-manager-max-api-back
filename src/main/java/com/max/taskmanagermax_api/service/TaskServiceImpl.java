@@ -184,4 +184,14 @@ public class TaskServiceImpl implements TaskService {
         return task;
     }
 
+	@Override
+	public TaskDTO updateStatus(long projectId, long taskId, long tsd) {
+	
+        ProjectTask(projectId, taskId).setEstado(3);
+        
+        Task updatedTask = taskRepository.save(ProjectTask(projectId, taskId));
+        return mappingDTO(updatedTask);
+	}
+
 }
+

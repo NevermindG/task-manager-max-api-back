@@ -53,6 +53,16 @@ public class TaskController {
         return new ResponseEntity<>(updateTasktById, HttpStatus.OK);
     }
     
+    @PutMapping ("projects/{projectId}/tasks/{taskId}/status/{std}")
+    @ResponseBody
+    public ResponseEntity<TaskDTO> updateStatusTask(@PathVariable (value = "projectId") long projectId,
+                                                @PathVariable (value = "taskId") long taskId,
+                                                @PathVariable (value = "std") long std//,
+                                                /*@RequestBody TaskDTO taskDTO*/) {
+        TaskDTO updateTasktById = taskService.updateStatus(projectId, taskId, std);
+        return new ResponseEntity<>(updateTasktById, HttpStatus.OK);
+    }
+    
     @DeleteMapping ("projects/{projectId}/tasks/{taskId}")
     public ResponseEntity<HashMap<String, Object>> deleteTask(@PathVariable (value = "projectId") long projectId,
                                                 @PathVariable (value = "taskId") long taskId) {
